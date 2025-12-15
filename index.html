@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devarsons - The Colour Solution Company</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Playfair+Display:ital,wght@1,400;1,600&display=swap" rel="stylesheet">
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --black-primary: #0A0A0A;
+    --black-pure: #000000;
+    --gold-primary: #D4AF37;
+    --gold-light: #F4E4C1;
+    --white: #FFFFFF;
+    --accent-teal: #00D4AA;
+    --accent-purple: #9D4EDD;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    overflow-x: hidden;
+    background: var(--black-primary);
+    color: var(--white);
+}
+
+.intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--black-pure);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#particles-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.3;
+}
+
+.screen-flash {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(244,228,193,0.3) 0%, transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.text-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.animated-text {
+    position: absolute;
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    opacity: 0;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 2rem;
+}
+
+.animated-text .word {
+    display: inline-block;
+}
+
+.text-1 {
+    background: linear-gradient(135deg, var(--white) 0%, var(--gold-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-2 {
+    background: linear-gradient(135deg, var(--white) 0%, var(--accent-teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-3 {
+    background: linear-gradient(135deg, var(--white) 0%, var(--accent-purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.text-4 {
+    font-size: clamp(4rem, 12vw, 8rem);
+    color: var(--white);
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px var(--gold-primary), 0 0 60px var(--gold-primary);
+    letter-spacing: 0.1em;
+}
+
+.logo-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    opacity: 0;
+}
+
+.logo-hexagons {
+    display: flex;
+    gap: -20px;
+    position: relative;
+    height: 100px;
+}
+
+.hexagon {
+    filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
+}
+
+.hex-1 {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.hex-2 {
+    position: absolute;
+    left: 60px;
+    top: 0;
+}
+
+.hex-3 {
+    position: absolute;
+    left: 30px;
+    top: -50px;
+    width: 100px;
+    height: 100px;
+}
+
+.logo-text {
+    text-align: center;
+    opacity: 0;
+}
+
+.company-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.company-subtitle {
+    font-size: 0.9rem;
+    color: var(--gold-light);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.tagline {
+    opacity: 0;
+}
+
+.tagline p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1rem, 2vw, 1.5rem);
+    color: var(--gold-primary);
+    letter-spacing: 0.1em;
+    position: relative;
+}
+
+.skip-btn {
+    position: absolute;
+    bottom: 3rem;
+    right: 3rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    padding: 0.75rem 1.5rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    animation: fadeInSkip 0.5s ease forwards 2s;
+}
+
+.skip-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--gold-primary);
+    transform: translateY(-2px);
+}
+
+@keyframes fadeInSkip {
+    to { opacity: 1; }
+}
+
+.main-content {
+    opacity: 0;
+    visibility: hidden;
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--black-pure) 0%, var(--black-primary) 100%);
+}
+
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 10, 10, 0.8);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+.header-logo {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.header-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.main-nav {
+    display: flex;
+    gap: 2.5rem;
+}
+
+.main-nav a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gold-primary);
+    transition: width 0.3s ease;
+}
+
+.main-nav a:hover {
+    color: var(--gold-primary);
+}
+
+.main-nav a:hover::after {
+    width: 100%;
+}
+
+.hero-section {
+    padding: 12rem 4rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.hero-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: rgba(212, 175, 55, 0.1);
+    border: 1px solid var(--gold-primary);
+    border-radius: 50px;
+    color: var(--gold-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+}
+
+.gradient-text {
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 50%, var(--accent-teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-description {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 700px;
+    margin-bottom: 3rem;
+}
+
+.hero-cta {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-light) 100%);
+    color: var(--black-pure);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid var(--white);
+    color: var(--white);
+}
+
+.btn-secondary:hover {
+    background: var(--white);
+    color: var(--black-pure);
+}
+
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 3rem;
+    margin-top: 5rem;
+    padding-top: 3rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-item h3 {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.stat-item p {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1rem;
+}
+
+.scroll-indicator {
+    position: fixed;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.scroll-line {
+    width: 2px;
+    height: 60px;
+    background: linear-gradient(180deg, var(--gold-primary), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(10px); }
+}
+
+@media (max-width: 768px) {
+    .main-header { padding: 1rem 2rem; }
+    .main-nav { display: none; }
+    .hero-section { padding: 10rem 2rem 3rem; }
+    .hero-cta { flex-direction: column; }
+    .btn-primary, .btn-secondary { width: 100%; }
+    .skip-btn { bottom: 2rem; right: 2rem; padding: 0.6rem 1.2rem; }
+    .logo-hexagons { transform: scale(0.8); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+    </style>
+</head>
+<body>
+    <div id="intro-screen" class="intro-screen">
+        <canvas id="particles-canvas"></canvas>
+        <div class="screen-flash"></div>
+        
+        <div class="text-container">
+            <h1 class="animated-text text-1">
+                <span class="word">Break</span>
+                <span class="word">the</span>
+                <span class="word">Shackles</span>
+            </h1>
+            <h1 class="animated-text text-2">
+                <span class="word">Challenge</span>
+                <span class="word">Barriers</span>
+            </h1>
+            <h1 class="animated-text text-3">
+                <span class="word">Transcend</span>
+                <span class="word">Boundaries</span>
+            </h1>
+            <h1 class="animated-text text-4">
+                <span class="word">Lead</span>
+            </h1>
+        </div>
+        
+        <div class="logo-container">
+            <div class="logo-hexagons">
+                <svg class="hexagon hex-1" viewBox="0 0 100 100" width="80" height="80">
+                    <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" fill="none" stroke="url(#goldGradient)" stroke-width="3"/>
+                </svg>
+                <svg class="hexagon hex-2" viewBox="0 0 100 100" width="80" height="80">
+                    <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" fill="none" stroke="url(#goldGradient)" stroke-width="3"/>
+                </svg>
+                <svg class="hexagon hex-3" viewBox="0 0 100 100" width="100" height="100">
+                    <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" fill="none" stroke="url(#goldGradient)" stroke-width="3"/>
+                    <text x="50" y="65" text-anchor="middle" fill="url(#goldGradient)" font-size="55" font-family="Playfair Display" font-weight="600">d</text>
+                </svg>
+                <svg width="0" height="0">
+                    <defs>
+                        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#F4E4C1;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#D4AF37;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            
+            <div class="logo-text">
+                <h2 class="company-name">devarsons</h2>
+                <p class="company-subtitle">Group Estd. 1923</p>
+            </div>
+            
+            <div class="tagline">
+                <p>The Colour Solution Company</p>
+            </div>
+        </div>
+        
+        <button class="skip-btn" id="skip-btn">
+            <span>Skip Intro</span>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M5 5L15 15M15 5L5 15" stroke="currentColor" stroke-width="2"/>
+            </svg>
+        </button>
+    </div>
+    
+    <div id="main-content" class="main-content">
+        <header class="main-header">
+            <div class="header-logo">
+                <svg class="header-hexagon" viewBox="0 0 100 100" width="50" height="50">
+                    <polygon points="50,5 95,27.5 95,72.5 50,95 5,72.5 5,27.5" fill="none" stroke="url(#goldGradient2)" stroke-width="3"/>
+                    <text x="50" y="65" text-anchor="middle" fill="url(#goldGradient2)" font-size="55" font-family="Playfair Display" font-weight="600">d</text>
+                </svg>
+                <svg width="0" height="0">
+                    <defs>
+                        <linearGradient id="goldGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#F4E4C1;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#D4AF37;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="header-name">devarsons</span>
+            </div>
+            
+            <nav class="main-nav">
+                <a href="#about">About</a>
+                <a href="#products">Products</a>
+                <a href="#industries">Industries</a>
+                <a href="#quality">Quality</a>
+                <a href="#sustainability">Sustainability</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </header>
+        
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-badge">Since 1923</div>
+                <h1 class="hero-title">
+                    Application-Based<br/>
+                    <span class="gradient-text">Innovation</span><br/>
+                    in Specialty Colorants
+                </h1>
+                <p class="hero-description">
+                    A regulatory-compliant, customer-centric company delivering advanced dyes 
+                    to global petroleum, plastics, cosmetics, and defense industries.
+                </p>
+                <div class="hero-cta">
+                    <button class="btn-primary">Explore Our Solutions</button>
+                    <button class="btn-secondary">View Capabilities</button>
+                </div>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <h3>100+</h3>
+                    <p>Years of Excellence</p>
+                </div>
+                <div class="stat-item">
+                    <h3>50+</h3>
+                    <p>Countries Served</p>
+                </div>
+                <div class="stat-item">
+                    <h3>ISO</h3>
+                    <p>Certified Quality</p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>Scroll to explore</span>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script>
+class ParticleSystem {
+    constructor(canvas) {
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.particles = [];
+        this.particleCount = 100;
+        this.resize();
+        this.init();
+        window.addEventListener('resize', () => this.resize());
+    }
+    
+    resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+    
+    init() {
+        for (let i = 0; i < this.particleCount; i++) {
+            this.particles.push({
+                x: Math.random() * this.canvas.width,
+                y: Math.random() * this.canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                radius: Math.random() * 2 + 1,
+                opacity: Math.random() * 0.5 + 0.2
+            });
+        }
+    }
+    
+    update() {
+        this.particles.forEach(particle => {
+            particle.x += particle.vx;
+            particle.y += particle.vy;
+            if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
+            if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
+        });
+    }
+    
+    draw() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.particles.forEach(particle => {
+            this.ctx.beginPath();
+            this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+            this.ctx.fillStyle = `rgba(212, 175, 55, ${particle.opacity})`;
+            this.ctx.fill();
+        });
+        
+        this.particles.forEach((p1, i) => {
+            this.particles.slice(i + 1).forEach(p2 => {
+                const dx = p1.x - p2.x;
+                const dy = p1.y - p2.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < 150) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(p1.x, p1.y);
+                    this.ctx.lineTo(p2.x, p2.y);
+                    this.ctx.strokeStyle = `rgba(212, 175, 55, ${0.2 * (1 - distance / 150)})`;
+                    this.ctx.lineWidth = 0.5;
+                    this.ctx.stroke();
+                }
+            });
+        });
+    }
+    
+    animate() {
+        this.update();
+        this.draw();
+        requestAnimationFrame(() => this.animate());
+    }
+}
+
+const particleCanvas = document.getElementById('particles-canvas');
+const particleSystem = new ParticleSystem(particleCanvas);
+particleSystem.animate();
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function createAnimationTimeline() {
+    const timeline = gsap.timeline({ onComplete: () => transitionToMainSite() });
+    
+    if (prefersReducedMotion) {
+        timeline.set('.animated-text', { opacity: 0 })
+                .to('.logo-container', { opacity: 1, duration: 0.5 })
+                .to('.logo-container', { opacity: 1, duration: 2 });
+        return timeline;
+    }
+    
+    timeline
+        .from('.text-1 .word', { opacity: 0, y: 50, filter: 'blur(10px)', duration: 0.8, stagger: 0.1, ease: 'power3.out' })
+        .to('.text-1', { opacity: 1, duration: 0.01 }, '-=0.8')
+        .to('.text-1 .word', { opacity: 0, y: -50, duration: 0.5, stagger: 0.05, ease: 'power2.in' }, '+=1')
+        .from('.text-2 .word', { opacity: 0, x: -100, duration: 0.8, stagger: 0.1, ease: 'back.out(1.7)' })
+        .to('.text-2', { opacity: 1, duration: 0.01 }, '-=0.8')
+        .to('.text-2', { opacity: 0, scale: 0, rotation: 10, duration: 0.6, ease: 'power2.in' }, '+=1')
+        .from('.text-3 .word', { opacity: 0, scale: 0.5, duration: 1, stagger: 0.1, ease: 'elastic.out(1, 0.5)' })
+        .to('.text-3', { opacity: 1, duration: 0.01 }, '-=1')
+        .to('.text-3 .word', { opacity: 0, x: '100vw', duration: 0.6, stagger: 0.05, ease: 'power2.in' }, '+=1')
+        .from('.text-4 .word', { opacity: 0, scale: 0.3, rotation: -5, duration: 1.2, ease: 'back.out(2)' })
+        .to('.text-4', { opacity: 1, duration: 0.01 }, '-=1.2')
+        .to('.screen-flash', { opacity: 1, duration: 0.1 }, '-=0.5')
+        .to('.screen-flash', { opacity: 0, duration: 0.3 })
+        .to('.text-4', { scale: 1.05, duration: 0.5, yoyo: true, repeat: 1, ease: 'power1.inOut' })
+        .to('.text-4', { opacity: 0, scale: 3, filter: 'blur(20px)', duration: 0.8, ease: 'power2.in' }, '+=1')
+        .from('.hexagon', {
+            opacity: 0, scale: 0, rotation: 360,
+            x: () => (Math.random() - 0.5) * 500,
+            y: () => (Math.random() - 0.5) * 500,
+            stagger: 0.15, duration: 1.5, ease: 'elastic.out(1, 0.6)'
+        })
+        .to('.logo-container', { opacity: 1, duration: 0.01 }, '-=1.5')
+        .from('.logo-text', { opacity: 0, y: 30, duration: 1, ease: 'power3.out' }, '-=0.5')
+        .to('.logo-text', { opacity: 1, duration: 0.01 }, '-=1')
+        .from('.tagline', { opacity: 0, letterSpacing: '20px', duration: 1.5, ease: 'power2.out' }, '-=0.3')
+        .to('.tagline', { opacity: 1, duration: 0.01 }, '-=1.5')
+        .to('.logo-container', { scale: 1, duration: 1.5 });
+    
+    return timeline;
+}
+
+function transitionToMainSite() {
+    const tl = gsap.timeline();
+    tl.to('#intro-screen', { opacity: 0, duration: 1, ease: 'power2.inOut' })
+      .set('.main-content', { visibility: 'visible' })
+      .to('.main-content', { opacity: 1, duration: 0.01 })
+      .from('.main-header', { y: -100, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.5')
+      .from('.hero-badge', { opacity: 0, y: 30, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+      .from('.hero-title', { opacity: 0, y: 50, duration: 0.8, ease: 'power3.out' }, '-=0.3')
+      .from('.hero-description', { opacity: 0, y: 30, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+      .from('.hero-cta button', { opacity: 0, y: 20, stagger: 0.1, duration: 0.5, ease: 'back.out(1.7)' }, '-=0.3')
+      .from('.hero-stats .stat-item', { opacity: 0, y: 30, stagger: 0.15, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+      .from('.scroll-indicator', { opacity: 0, y: 20, duration: 0.6, ease: 'power2.out' }, '-=0.3')
+      .call(() => {
+          document.getElementById('intro-screen').remove();
+          document.body.style.overflow = 'auto';
+      });
+}
+
+document.getElementById('skip-btn').addEventListener('click', () => {
+    gsap.globalTimeline.clear();
+    transitionToMainSite();
+});
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.getElementById('intro-screen')) {
+        gsap.globalTimeline.clear();
+        transitionToMainSite();
+    }
+});
+
+document.body.style.overflow = 'hidden';
+
+window.addEventListener('load', () => {
+    setTimeout(() => createAnimationTimeline(), 500);
+});
+
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+    const header = document.querySelector('.main-header');
+    if (!header) return;
+    if (currentScroll > lastScroll && currentScroll > 100) {
+        header.style.transform = 'translateY(-100%)';
+    } else {
+        header.style.transform = 'translateY(0)';
+    }
+    lastScroll = currentScroll;
+});
+    </script>
+</body>
+</html>
