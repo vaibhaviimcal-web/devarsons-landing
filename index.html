@@ -22,6 +22,8 @@
     --white: #FFFFFF;
     --accent-teal: #00D4AA;
     --accent-purple: #9D4EDD;
+    --accent-pink: #FF6B9D;
+    --grey-dark: #1A1A1A;
 }
 
 body {
@@ -141,25 +143,9 @@ body {
     filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.5));
 }
 
-.hex-1 {
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
-.hex-2 {
-    position: absolute;
-    left: 60px;
-    top: 0;
-}
-
-.hex-3 {
-    position: absolute;
-    left: 30px;
-    top: -50px;
-    width: 100px;
-    height: 100px;
-}
+.hex-1 { position: absolute; left: 0; top: 0; }
+.hex-2 { position: absolute; left: 60px; top: 0; }
+.hex-3 { position: absolute; left: 30px; top: -50px; width: 100px; height: 100px; }
 
 .logo-text {
     text-align: center;
@@ -196,7 +182,6 @@ body {
     font-size: clamp(1rem, 2vw, 1.5rem);
     color: var(--gold-primary);
     letter-spacing: 0.1em;
-    position: relative;
 }
 
 .skip-btn {
@@ -234,7 +219,7 @@ body {
     opacity: 0;
     visibility: hidden;
     min-height: 100vh;
-    background: linear-gradient(180deg, var(--black-pure) 0%, var(--black-primary) 100%);
+    background: var(--black-pure);
 }
 
 .main-header {
@@ -246,9 +231,9 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgba(10, 10, 10, 0.8);
+    background: rgba(10, 10, 10, 0.95);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
     z-index: 1000;
     transition: transform 0.3s ease;
 }
@@ -302,59 +287,389 @@ body {
     width: 100%;
 }
 
+/* HERO SECTION - COMPLETELY REDESIGNED */
 .hero-section {
-    padding: 12rem 4rem 4rem;
-    max-width: 1400px;
+    padding: 10rem 4rem 4rem;
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+}
+
+/* Heritage Badge - PROMINENT */
+.heritage-badge {
+    position: absolute;
+    top: 8rem;
+    right: 4rem;
+    text-align: right;
+}
+
+.heritage-year {
+    font-size: clamp(6rem, 12vw, 10rem);
+    font-weight: 900;
+    line-height: 0.9;
+    background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-light) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0.15;
+    letter-spacing: -0.05em;
+}
+
+.heritage-text {
+    font-size: 1.2rem;
+    color: var(--gold-primary);
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    margin-top: -1rem;
+}
+
+/* Main Hero Content */
+.hero-main {
+    margin-bottom: 6rem;
+}
+
+.hero-title-large {
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 2rem;
+    letter-spacing: -0.03em;
+}
+
+.hero-title-large .highlight {
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 50%, var(--accent-teal) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+}
+
+.hero-subtitle {
+    font-size: clamp(1.2rem, 2.5vw, 2rem);
+    color: rgba(255, 255, 255, 0.6);
+    max-width: 800px;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.hero-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--gold-primary);
+    max-width: 700px;
+    margin: 2rem 0;
+    padding-left: 2rem;
+    border-left: 3px solid var(--gold-primary);
+    opacity: 0.8;
+}
+
+/* Interactive Tiles Grid */
+.interactive-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 4rem 0;
+}
+
+.tile {
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(10, 10, 10, 0.9) 100%);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 20px;
+    padding: 2.5rem;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.tile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--gold-primary) 0%, var(--accent-teal) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.tile:hover {
+    transform: translateY(-10px);
+    border-color: var(--gold-primary);
+    box-shadow: 0 20px 60px rgba(212, 175, 55, 0.3);
+}
+
+.tile:hover::before {
+    opacity: 0.1;
+}
+
+.tile-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.tile-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--gold-light);
+    position: relative;
+    z-index: 1;
+}
+
+.tile-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.6);
+    position: relative;
+    z-index: 1;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease;
+}
+
+.tile:hover .tile-description {
+    max-height: 200px;
+}
+
+.tile-label {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.7);
+    position: relative;
+    z-index: 1;
+}
+
+/* Buzzwords Cloud */
+.buzzwords-section {
+    margin: 6rem 0;
+    text-align: center;
+}
+
+.buzzwords-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 3rem;
+    color: var(--gold-light);
+}
+
+.buzzwords-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    max-width: 1200px;
     margin: 0 auto;
 }
 
-.hero-badge {
-    display: inline-block;
-    padding: 0.5rem 1.5rem;
-    background: rgba(212, 175, 55, 0.1);
-    border: 1px solid var(--gold-primary);
+.buzzword {
+    padding: 0.8rem 1.5rem;
+    background: rgba(26, 26, 26, 0.6);
+    border: 1px solid rgba(212, 175, 55, 0.3);
     border-radius: 50px;
-    color: var(--gold-primary);
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 2rem;
+    color: var(--white);
+    transition: all 0.3s ease;
+    cursor: default;
 }
 
-.hero-title {
-    font-size: clamp(2.5rem, 6vw, 5rem);
-    font-weight: 800;
-    line-height: 1.1;
-    margin-bottom: 2rem;
-    letter-spacing: -0.02em;
+.buzzword:hover {
+    background: rgba(212, 175, 55, 0.2);
+    border-color: var(--gold-primary);
+    transform: scale(1.05);
+    color: var(--gold-light);
 }
 
-.gradient-text {
-    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 50%, var(--accent-teal) 100%);
+/* World Map Section */
+.world-map-section {
+    margin: 6rem 0;
+    padding: 4rem;
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.5) 0%, rgba(10, 10, 10, 0.8) 100%);
+    border-radius: 30px;
+    border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.map-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
 }
 
-.hero-description {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    color: rgba(255, 255, 255, 0.7);
-    max-width: 700px;
+.map-subtitle {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.6);
     margin-bottom: 3rem;
+    font-size: 1.1rem;
 }
 
-.hero-cta {
+.map-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.map-stat {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    transition: all 0.3s ease;
+}
+
+.map-stat:hover {
+    border-color: var(--gold-primary);
+    transform: translateY(-5px);
+}
+
+.map-stat-value {
+    font-size: 3rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.map-stat-label {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+}
+
+.map-stat-detail {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 0.5rem;
+}
+
+/* Accreditations */
+.accreditations-section {
+    margin: 4rem 0;
+    text-align: center;
+}
+
+.accreditations-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--gold-light);
+}
+
+.accreditations-grid {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.accreditation-badge {
+    padding: 1.5rem 2rem;
+    background: rgba(26, 26, 26, 0.6);
+    border: 2px solid var(--gold-primary);
+    border-radius: 15px;
+    min-width: 200px;
+    transition: all 0.3s ease;
+}
+
+.accreditation-badge:hover {
+    background: rgba(212, 175, 55, 0.1);
+    transform: scale(1.05);
+}
+
+.badge-title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--gold-primary);
+    margin-bottom: 0.3rem;
+}
+
+.badge-subtitle {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Quote Section */
+.quote-section {
+    margin: 6rem 0;
+    padding: 4rem;
+    text-align: center;
+    position: relative;
+}
+
+.quote-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    line-height: 1.6;
+    color: var(--white);
+    max-width: 900px;
+    margin: 0 auto 2rem;
+    position: relative;
+}
+
+.quote-text::before {
+    content: '"';
+    position: absolute;
+    top: -2rem;
+    left: -2rem;
+    font-size: 8rem;
+    color: var(--gold-primary);
+    opacity: 0.2;
+    font-family: Georgia, serif;
+}
+
+.quote-author {
+    font-size: 1rem;
+    color: var(--gold-primary);
+    font-weight: 600;
+}
+
+/* CTA Section */
+.cta-section {
+    margin: 6rem 0;
+    padding: 5rem 4rem;
+    background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(0, 212, 170, 0.1) 100%);
+    border-radius: 30px;
+    text-align: center;
+}
+
+.cta-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
+
+.cta-description {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-buttons {
     display: flex;
     gap: 1.5rem;
+    justify-content: center;
     flex-wrap: wrap;
 }
 
 .btn-primary, .btn-secondary {
-    padding: 1rem 2.5rem;
-    font-size: 1rem;
-    font-weight: 600;
+    padding: 1.2rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 700;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -368,7 +683,7 @@ body {
 
 .btn-primary:hover {
     transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.5);
 }
 
 .btn-secondary {
@@ -382,30 +697,7 @@ body {
     color: var(--black-pure);
 }
 
-.hero-stats {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 3rem;
-    margin-top: 5rem;
-    padding-top: 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.stat-item h3 {
-    font-size: 3rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-primary) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 0.5rem;
-}
-
-.stat-item p {
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 1rem;
-}
-
+/* Scroll Indicator */
 .scroll-indicator {
     position: fixed;
     bottom: 3rem;
@@ -419,6 +711,7 @@ body {
     font-size: 0.85rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+    z-index: 100;
 }
 
 .scroll-line {
@@ -433,11 +726,25 @@ body {
     50% { opacity: 1; transform: translateY(10px); }
 }
 
+@media (max-width: 1024px) {
+    .heritage-badge {
+        position: static;
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+    
+    .interactive-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 768px) {
     .main-header { padding: 1rem 2rem; }
     .main-nav { display: none; }
-    .hero-section { padding: 10rem 2rem 3rem; }
-    .hero-cta { flex-direction: column; }
+    .hero-section { padding: 8rem 2rem 3rem; }
+    .world-map-section { padding: 2rem; }
+    .cta-section { padding: 3rem 2rem; }
+    .cta-buttons { flex-direction: column; }
     .btn-primary, .btn-secondary { width: 100%; }
     .skip-btn { bottom: 2rem; right: 2rem; padding: 0.6rem 1.2rem; }
     .logo-hexagons { transform: scale(0.8); }
@@ -534,57 +841,167 @@ body {
             </div>
             
             <nav class="main-nav">
-                <a href="#about">About</a>
+                <a href="#about">Company Profile</a>
+                <a href="#manufacturing">Manufacturing</a>
                 <a href="#products">Products</a>
-                <a href="#industries">Industries</a>
-                <a href="#quality">Quality</a>
-                <a href="#sustainability">Sustainability</a>
+                <a href="#quality">Quality & R&D</a>
+                <a href="#sustainability">EHS&S</a>
                 <a href="#contact">Contact</a>
             </nav>
         </header>
         
         <section class="hero-section">
-            <div class="hero-content">
-                <div class="hero-badge">Since 1923</div>
-                <h1 class="hero-title">
-                    Application-Based<br/>
-                    <span class="gradient-text">Innovation</span><br/>
-                    in Specialty Colorants
+            <!-- Heritage Badge - PROMINENT -->
+            <div class="heritage-badge">
+                <div class="heritage-year">1923</div>
+                <div class="heritage-text">SINCE</div>
+            </div>
+            
+            <!-- Main Hero -->
+            <div class="hero-main">
+                <h1 class="hero-title-large">
+                    <span class="highlight">Application-Based</span>
+                    Innovation
                 </h1>
-                <p class="hero-description">
-                    A regulatory-compliant, customer-centric company delivering advanced dyes 
-                    to global petroleum, plastics, cosmetics, and defense industries.
+                <p class="hero-subtitle">
+                    Strategic preferred supplier to global Oil & Petroleum, Plastics, Cosmetics and Defense companies
                 </p>
-                <div class="hero-cta">
-                    <button class="btn-primary">Explore Our Solutions</button>
-                    <button class="btn-secondary">View Capabilities</button>
+                <div class="hero-quote">
+                    "Don't find customers for your products, find products for your customers." — Seth Godin
                 </div>
             </div>
             
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <h3>100+</h3>
-                    <p>Years of Excellence</p>
+            <!-- Interactive Tiles -->
+            <div class="interactive-grid">
+                <div class="tile">
+                    <span class="tile-icon">🧪</span>
+                    <h3 class="tile-title">Cosmetics</h3>
+                    <p class="tile-label">EU Cosmetics, US FDA, Schedule Q India</p>
+                    <p class="tile-description">Our products comply with various regulations including heavy metal analysis, microbial counts and other parameters required as per global cosmetics regulations.</p>
                 </div>
-                <div class="stat-item">
-                    <h3>50+</h3>
-                    <p>Countries Served</p>
+                
+                <div class="tile">
+                    <span class="tile-icon">⚗️</span>
+                    <h3 class="tile-title">Polymers & Plastics</h3>
+                    <p class="tile-label">Master Batch, PVC, Engineering Plastics</p>
+                    <p class="tile-description">Specialized colorants for general plastics, high-performance PET, engineering compounding, and reprocess granules with consistent quality.</p>
                 </div>
-                <div class="stat-item">
-                    <h3>ISO</h3>
-                    <p>Certified Quality</p>
+                
+                <div class="tile">
+                    <span class="tile-icon">🛢️</span>
+                    <h3 class="tile-title">Petroleum & Lubricants</h3>
+                    <p class="tile-label">Engine Oil, Grease, Coolants</p>
+                    <p class="tile-description">Application-specific dyes for fuel marking, lubricant identification, and coolant systems with superior thermal stability.</p>
+                </div>
+                
+                <div class="tile">
+                    <span class="tile-icon">🔬</span>
+                    <h3 class="tile-title">Specialized Applications</h3>
+                    <p class="tile-label">Medical, NDT, Defense</p>
+                    <p class="tile-description">Highly evolved applications in medicine, non-destructive testing, and defense sectors with customized molecular development.</p>
+                </div>
+            </div>
+            
+            <!-- Buzzwords Section -->
+            <div class="buzzwords-section">
+                <h2 class="buzzwords-title">What Sets Us Apart</h2>
+                <div class="buzzwords-cloud">
+                    <span class="buzzword">Lean Management</span>
+                    <span class="buzzword">SAP Integrated</span>
+                    <span class="buzzword">Application Oriented</span>
+                    <span class="buzzword">Debt Free</span>
+                    <span class="buzzword">Chemistry Oriented</span>
+                    <span class="buzzword">Responsible Sourcing</span>
+                    <span class="buzzword">Strong EHS Commitment</span>
+                    <span class="buzzword">Technical Assistance</span>
+                    <span class="buzzword">Emphasis on Consistency</span>
+                    <span class="buzzword">Backward Integrated</span>
+                    <span class="buzzword">Application Development Expertise</span>
+                    <span class="buzzword">Decisive & Agile</span>
+                    <span class="buzzword">Customer-Centric</span>
+                    <span class="buzzword">Innovation Lab</span>
+                </div>
+            </div>
+            
+            <!-- World Map Section -->
+            <div class="world-map-section">
+                <h2 class="map-title">Global Reach</h2>
+                <p class="map-subtitle">Serving customers across 50+ countries worldwide</p>
+                
+                <div class="map-stats">
+                    <div class="map-stat">
+                        <div class="map-stat-value">50%</div>
+                        <div class="map-stat-label">Americas</div>
+                        <div class="map-stat-detail">USA, Canada, South America, Mexico</div>
+                    </div>
+                    <div class="map-stat">
+                        <div class="map-stat-value">40%</div>
+                        <div class="map-stat-label">Europe</div>
+                        <div class="map-stat-detail">EU, UK & Associated Countries</div>
+                    </div>
+                    <div class="map-stat">
+                        <div class="map-stat-value">10%</div>
+                        <div class="map-stat-label">Asia Pacific</div>
+                        <div class="map-stat-detail">Far East & Other Countries</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Accreditations -->
+            <div class="accreditations-section">
+                <h2 class="accreditations-title">Certifications & Accreditations</h2>
+                <div class="accreditations-grid">
+                    <div class="accreditation-badge">
+                        <div class="badge-title">ISO 9001</div>
+                        <div class="badge-subtitle">Quality Management</div>
+                    </div>
+                    <div class="accreditation-badge">
+                        <div class="badge-title">ISO 14001</div>
+                        <div class="badge-subtitle">Environmental</div>
+                    </div>
+                    <div class="accreditation-badge">
+                        <div class="badge-title">OHSAS 18001</div>
+                        <div class="badge-subtitle">Health & Safety</div>
+                    </div>
+                    <div class="accreditation-badge">
+                        <div class="badge-title">Export House</div>
+                        <div class="badge-subtitle">Govt. Recognized</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quote Section -->
+            <div class="quote-section">
+                <p class="quote-text">
+                    We have spent years creating a culture around the customer and their needs. Our customer-centric approach has won us the status of preferred supplier from global companies.
+                </p>
+                <p class="quote-author">— Devarsons Philosophy</p>
+            </div>
+            
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <h2 class="cta-title">Ready to Experience the Difference?</h2>
+                <p class="cta-description">
+                    Discover how our application-based innovation and customer-centric approach can solve your colorant challenges.
+                </p>
+                <div class="cta-buttons">
+                    <button class="btn-primary">Request a Consultation</button>
+                    <button class="btn-secondary">Download Capabilities Brochure</button>
                 </div>
             </div>
         </section>
         
         <div class="scroll-indicator">
             <div class="scroll-line"></div>
-            <span>Scroll to explore</span>
+            <span>Scroll</span>
         </div>
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script>
+gsap.registerPlugin(ScrollTrigger);
+
 class ParticleSystem {
     constructor(canvas) {
         this.canvas = canvas;
@@ -710,16 +1127,49 @@ function transitionToMainSite() {
       .set('.main-content', { visibility: 'visible' })
       .to('.main-content', { opacity: 1, duration: 0.01 })
       .from('.main-header', { y: -100, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.5')
-      .from('.hero-badge', { opacity: 0, y: 30, duration: 0.6, ease: 'power2.out' }, '-=0.4')
-      .from('.hero-title', { opacity: 0, y: 50, duration: 0.8, ease: 'power3.out' }, '-=0.3')
-      .from('.hero-description', { opacity: 0, y: 30, duration: 0.6, ease: 'power2.out' }, '-=0.4')
-      .from('.hero-cta button', { opacity: 0, y: 20, stagger: 0.1, duration: 0.5, ease: 'back.out(1.7)' }, '-=0.3')
-      .from('.hero-stats .stat-item', { opacity: 0, y: 30, stagger: 0.15, duration: 0.6, ease: 'power2.out' }, '-=0.4')
-      .from('.scroll-indicator', { opacity: 0, y: 20, duration: 0.6, ease: 'power2.out' }, '-=0.3')
+      .from('.heritage-badge', { opacity: 0, scale: 0.5, rotation: -10, duration: 1, ease: 'back.out(1.7)' }, '-=0.4')
+      .from('.hero-title-large', { opacity: 0, y: 50, duration: 0.8, ease: 'power3.out' }, '-=0.5')
+      .from('.hero-subtitle', { opacity: 0, y: 30, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+      .from('.hero-quote', { opacity: 0, x: -30, duration: 0.6, ease: 'power2.out' }, '-=0.3')
+      .from('.tile', { opacity: 0, y: 50, stagger: 0.1, duration: 0.6, ease: 'power2.out' }, '-=0.3')
+      .from('.buzzwords-title', { opacity: 0, y: 30, duration: 0.6, ease: 'power2.out' }, '-=0.2')
+      .from('.buzzword', { opacity: 0, scale: 0, stagger: 0.05, duration: 0.4, ease: 'back.out(1.7)' }, '-=0.3')
+      .from('.world-map-section', { opacity: 0, y: 50, duration: 0.8, ease: 'power2.out' }, '-=0.3')
+      .from('.accreditations-section', { opacity: 0, y: 30, duration: 0.6, ease: 'power2.out' }, '-=0.4')
+      .from('.quote-section', { opacity: 0, duration: 0.6, ease: 'power2.out' }, '-=0.3')
+      .from('.cta-section', { opacity: 0, y: 50, duration: 0.8, ease: 'power2.out' }, '-=0.3')
       .call(() => {
           document.getElementById('intro-screen').remove();
           document.body.style.overflow = 'auto';
+          initScrollAnimations();
       });
+}
+
+function initScrollAnimations() {
+    gsap.utils.toArray('.tile').forEach(tile => {
+        gsap.from(tile, {
+            scrollTrigger: {
+                trigger: tile,
+                start: 'top 80%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 50,
+            opacity: 0,
+            duration: 0.6
+        });
+    });
+    
+    gsap.from('.buzzword', {
+        scrollTrigger: {
+            trigger: '.buzzwords-cloud',
+            start: 'top 70%'
+        },
+        scale: 0,
+        opacity: 0,
+        stagger: 0.03,
+        duration: 0.4,
+        ease: 'back.out(1.7)'
+    });
 }
 
 document.getElementById('skip-btn').addEventListener('click', () => {
